@@ -6,6 +6,7 @@
   - [Contents](#contents)
   - [Using port](#using-port)
   - [Using Bind Mount](#using-bind-mount)
+  - [Environment variables](#environment-variables)
 
 ## Using port
 
@@ -60,3 +61,27 @@ For security purposes, create your bind mount in read-only mode:
 ```bash
 docker run -v $(pwd):/app:ro -v /app/node_modules -p 3000:3000 -d --name node-docker node-docker-img
 ```
+
+## Environment variables
+
+After env variable is set in Dockerfile, we can override it when starting a container. Example, PORT is set in the Dockerfile as:
+
+```Dockerfile
+ENV PORT 3000 # 3000 is the default value
+```
+
+We can start our container on another PORT by using the `-e` or `--env` argument like so:
+
+```bash
+docker run -v $(pwd):/app:ro -v /app/node_modules -e PORT=4000 -p 3000:4000 -d --name node-docker node-docker-img
+```
+
+> Remeber why we need to change to `-p 3000:4000`? Read the [Using port section](#using-port).
+
+Instead of specifying the env variables one-by-one, we can also use an env file:
+
+```bash
+docker run -v $(pwd):/app:ro -v /app/node_modules --env-file ./.env -p 3000:4000 -d --name node-docker node-docker-img
+```
+
+> Create .env in the root directory and specify your variables
