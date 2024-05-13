@@ -54,3 +54,9 @@ docker run -v $(pwd):/app -v /app/node_modules -p 3000:3000 -d --name node-docke
 - `$(pwd)` -> variable for our current working directory.
 - `$(pwd):/app` -> copies file from current working directory to `/app` working directory in our container.
 - `/app/node_modules` -> prevent the first volume from overriding the current directory, `/app/node_modules`.
+
+For security purposes, create your bind mount in read-only mode:
+
+```bash
+docker run -v $(pwd):/app:ro -v /app/node_modules -p 3000:3000 -d --name node-docker node-docker-img
+```
