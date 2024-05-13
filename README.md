@@ -110,5 +110,11 @@ docker-compose up -d --build
 Delete the container along with its volume:
 
 ```bash
-docker-compose down -d -v
+docker-compose down -v
+```
+
+Use the -f flag when using multiple docker-compose files. Files should be arranged accoring to their heirachy.
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
 ```
