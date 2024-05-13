@@ -7,6 +7,7 @@
   - [Using port](#using-port)
   - [Using Bind Mount](#using-bind-mount)
   - [Environment variables](#environment-variables)
+  - [Docker compose file](#docker-compose-file)
 
 ## Using port
 
@@ -85,3 +86,29 @@ docker run -v $(pwd):/app:ro -v /app/node_modules --env-file ./.env -p 3000:4000
 ```
 
 > Create .env in the root directory and specify your variables
+
+## Docker compose file
+
+Docker compose file helps to shorten the long command we have been writing on our terminal. With docker-compose file, we have shorten:
+
+```bash
+docker run -v $(pwd):/app:ro -v /app/node_modules --env-file ./.env -p 3000:3000 -d --name node-docker node-docker-img
+```
+
+to
+
+```bash
+docker-compose up -d
+```
+
+Add a `--build` arguments to rebuild the image incase it is stale:
+
+```bash
+docker-compose up -d --build
+```
+
+Delete the container along with its volume:
+
+```bash
+docker-compose down -d -v
+```
