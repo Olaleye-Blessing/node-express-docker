@@ -8,6 +8,7 @@
   - [Using Bind Mount](#using-bind-mount)
   - [Environment variables](#environment-variables)
   - [Docker compose file](#docker-compose-file)
+  - [Persisting Data](#persisting-data)
 
 ## Using port
 
@@ -117,4 +118,31 @@ Use the -f flag when using multiple docker-compose files. Files should be arrang
 
 ```bash
 docker-compose -f docker-compose.yml -f docker-compose.prod.yml up -d --build
+```
+
+## Persisting Data
+
+When using a DB image, it makes sense to persist data. This is done by creating volumes. Check each image documentation to know the path of the named volume.
+
+This means `-v` should be avoided when tearing down a container. Instead, run:
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.dev.yml down
+
+docker volume prune
+```
+
+> `docker volume prune` removes unused local volumes
+
+When using named volumes, we need to use the volumes key to declare the volume(s) we want to use.
+
+```yml
+version: "3"
+services:
+  mongo:
+   image: mongo
+   volumes:
+     - mongo-db:/data/db # named volume: mongo-db
+volumes:
+  mongo-db:
 ```
