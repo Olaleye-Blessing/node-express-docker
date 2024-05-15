@@ -1,12 +1,18 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const {
+	MONGO_USER,
+	MONGO_PASSWORD,
+	MONGO_IP,
+	MONGO_PORT,
+} = require('./config/config');
 
 const app = express();
 
 // TODO: This is throwing authentication error. Fix it
 mongoose
 	.connect(
-		'mongodb://blexxy:love@mongo/?authSource=amdin&directConnection=true'
+		`mongodb://${MONGO_USER}:${MONGO_PASSWORD}@${MONGO_IP}:${MONGO_PORT}/?authSource=amdin&directConnection=true`
 	)
 	.then(() => console.log('Mongo Db connected Successfully'))
 	.catch((e) => {
